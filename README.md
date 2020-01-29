@@ -53,6 +53,7 @@ By the way, also use reselect to simplify the way to get todos to display:
 ```js
 import { createSelector } from "reselect";
 import { VisibilityFilters } from "../actions";
+
 export const selectAllTodos = state => state.todos;
 export const selectVisibilityFilter = state => state.visibilityFilter;
 
