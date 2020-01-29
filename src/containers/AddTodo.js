@@ -1,27 +1,26 @@
 import React from "react";
-import { connect } from "react-redux";
-import { addTodo } from "../actions";
+import { useTodosStore } from "../store";
 
-const AddTodo = ({ dispatch }) => {
-  let input;
+export const AddTodo = () => {
+  const { addTodo } = useTodosStore();
+  const inputEl = React.useRef();
+  const onSubmit = e => {
+    e.preventDefault();
+    const target = inputEl.current;
+
+    if (!target.value.trim()) {
+      return;
+    }
+    addTodo(target.value);
+    target.value = "";
+  };
 
   return (
     <div>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          if (!input.value.trim()) {
-            return;
-          }
-          dispatch(addTodo(input.value));
-          input.value = "";
-        }}
-      >
-        <input ref={node => (input = node)} />
+      <form onSubmit={onSubmit}>
+        <input ref={inputEl} />
         <button type="submit">Add Todo</button>
       </form>
     </div>
   );
 };
-
-export default connect()(AddTodo);
