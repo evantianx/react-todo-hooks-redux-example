@@ -1,10 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback } from "react";
 
-import { addTodo } from "./actions";
-
 import { selectDisplayedTodos, selectVisibilityFilter } from "./selectors";
-import { setVisibilityFilter, toggleTodo } from "./actions";
+import { setVisibilityFilter, toggleTodo, addTodo } from "./actions";
 
 export const useTodosStore = () => {
   const dispatch = useDispatch();
