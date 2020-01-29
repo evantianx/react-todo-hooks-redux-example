@@ -33,10 +33,11 @@ export const useTodosStore = () => {
 };
 ```
 
-Use hooks to organize store logic at one place, so that the component code can be really shorter and cleaner. And the most important thing is that we could reuse the hook at other place.
+Use hooks to organize store logic at one place, so that the component code can be shorter and cleaner. And the most important thing is that we could reuse the hook at any other place.
 
 ```js
 // src/containers/VisibleTodoList.js
+
 import React from "react";
 import { TodoList } from "../components/TodoList";
 import { useTodosStore } from "../store";
@@ -45,4 +46,30 @@ export const VisibleTodoList = () => {
   const { todos, toggleTodo } = useTodosStore();
   return <TodoList todos={todos} toggleTodo={toggleTodo} />;
 };
+```
+
+By the way, also use reselect to simplify the way to get todos to display:
+
+```js
+import { createSelector } from "reselect";
+import { VisibilityFilters } from "../actions";
+export const selectAllTodos = state => state.todos;
+export const selectVisibilityFilter = state => state.visibilityFilter;
+
+export const selectDisplayedTodos = createSelector(
+  selectAllTodos,
+  selectVisibilityFilter,
+  (todos, filter) => {
+    switch (filter) {
+      case VisibilityFilters.SHOW_ALL:
+        return todos;
+      case VisibilityFilters.SHOW_COMPLETED:
+        return todos.filter(t => t.completed);
+      case VisibilityFilters.SHOW_ACTIVE:
+        return todos.filter(t => !t.completed);
+      default:
+        throw new Error("Unknown filter: " + filter);
+    }
+  }
+);
 ```
