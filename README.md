@@ -1,6 +1,6 @@
 ## Todo App
 
-To show how to use hooks + redux together in an App. [Check the original one at master branch]
+To show how to use hooks + redux together in an App. [Check the original one at master branch or [here](https://github.com/reduxjs/redux/tree/master/examples/todos/src)]
 
 ```js
 // src/store/index.js
